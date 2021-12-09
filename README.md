@@ -2,7 +2,7 @@
 
 ## 🌏 Mobile App 🌎
 
-Proyek ini dapat diakses di [Releases](https://github.com/harmonica-pacil/invid19_mobile/releases/tag/v1.0.1).
+Proyek ini dapat diakses di [Releases](https://github.com/harmonica-pacil/invid19_mobile/releases/tag/v1.0.2).
 
 ## 👨‍💻 Pengembang Aplikasi 👩‍💻
 
