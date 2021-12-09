@@ -1,8 +1,8 @@
 ### invid19
 
-## 🌏 Situs Web 🌎
+## 🌏 Mobile App 🌎
 
-Proyek ini dapat diakses di [invid19.herokuapp.com](https://invid19.herokuapp.com/).
+Proyek ini dapat diakses di [Releases](https://github.com/harmonica-pacil/invid19_mobile/releases/tag/v1.0.1).
 
 ## 👨‍💻 Pengembang Aplikasi 👩‍💻
 
