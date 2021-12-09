@@ -8,6 +8,8 @@ on:
       - main
       - master
       - develop
+    paths-ignore:
+      - '**/README.md'
 name: 'Build & Release'
 jobs:
   build:
