@@ -26,7 +26,7 @@ class _MyAppState extends State<MyApp> {
         /* dark theme settings */
       ),
       themeMode: ThemeMode.dark,
-      home: const Home(title: 'Invid19'),
+      home:  Home(title: 'Invid19'),
     );
   }
 }

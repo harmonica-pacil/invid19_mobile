@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
+import 'forum.dart';
 
-
-  Drawer myDrawer() {
-    return Drawer(
+Drawer myDrawer(context) {
+  return Drawer(
     child: ListView(
       padding: EdgeInsets.zero,
-      children:  <Widget>[
+      children: <Widget>[
         DrawerHeader(
-          
           child: Text(
             'INVID 19',
             style: TextStyle(
@@ -16,17 +15,21 @@ import 'package:flutter/material.dart';
             ),
           ),
         ),
-          ListTile(
+        ListTile(
           leading: Icon(Icons.account_circle),
           title: Text('Profile'),
-          onTap: (){},
+          onTap: () {},
         ),
         ListTile(
           leading: Icon(Icons.forum),
           title: Text('Forum'),
-          onTap: (){} ,
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => Forum()),
+            );
+          },
         ),
-      
         ListTile(
           leading: Icon(Icons.account_circle),
           title: Text('bla bla'),
@@ -46,6 +49,4 @@ import 'package:flutter/material.dart';
       ],
     ),
   );
-  }
-
-
+}

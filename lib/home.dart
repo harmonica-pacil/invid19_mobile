@@ -21,32 +21,28 @@ class _HomeState extends State<Home> {
       ),
 
       //code untuk navbar
-      drawer: myDrawer(),
-      body: myHome(),
+      drawer: myDrawer(context),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Image.network(
+                "https://raw.githubusercontent.com/harmonica-pacil/invid19/master/static/images/logo.png",
+                scale: 2,
+              ),
+              Padding(
+                padding: EdgeInsets.all(16.0),
+                child: Text(
+                  'WELCOME TO INVID 19',
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
-}
-
-Padding myHome() {
-  return Padding(
-    padding: const EdgeInsets.all(16.0),
-    child: Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          Image.network(
-            "https://raw.githubusercontent.com/harmonica-pacil/invid19/master/static/images/logo.png",
-            scale: 2,
-          ),
-          Padding(
-            padding:  EdgeInsets.all(16.0),
-            child: Text(
-              'WELCOME TO INVID 19',
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
-            ),
-          ),
-        ],
-      ),
-    ),
-  );
 }

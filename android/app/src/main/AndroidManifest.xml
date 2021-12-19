@@ -1,5 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.invid19_mobile">
+<uses-permission android:name="android.permission.INTERNET" />
    <application
         android:label="invid19_mobile"
         android:icon="@mipmap/ic_launcher">
