@@ -17,7 +17,7 @@ class _CommentState extends State<Comment> {
   var data_diskusi;
   var diskusi_i;
 
-  var url_comment = "http://127.0.0.1:8000/comment/json/";
+  var url_comment = "http://127.0.0.1:8000/comment/json/ ";
   var data_comment;
   var title;
 
