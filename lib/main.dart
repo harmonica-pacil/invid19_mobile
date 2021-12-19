@@ -12,8 +12,14 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Invid19',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        brightness: Brightness.light,
+        /* light theme settings */
       ),
+      darkTheme: ThemeData(
+        brightness: Brightness.dark,
+        /* dark theme settings */
+      ),
+      themeMode: ThemeMode.dark,
       home: const MyHomePage(title: 'Invid19'),
     );
   }
