@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'comment.dart';
 
 class Forum extends StatefulWidget {
   const Forum({Key? key}) : super(key: key);
@@ -10,7 +11,7 @@ class Forum extends StatefulWidget {
 }
 
 class _ForumState extends State<Forum> {
-  var url = "http://invid19.herokuapp.com/diskusi/json";
+  var url = "http://127.0.0.1:8000/diskusi/json/";
   var data;
 
   @override
@@ -23,7 +24,7 @@ class _ForumState extends State<Forum> {
   fetchData() async {
     var res = await http.get(Uri.parse(url));
     data = jsonDecode(res.body);
-    print(res.body);
+    // print(res.body);
     setState(() {});
   }
 
@@ -41,16 +42,18 @@ class _ForumState extends State<Forum> {
         ),
         body: data != null
             ? ListView.builder(
-              itemBuilder: (context, index) {
-                return ListTile(
-                  title: Text(data[index]['pk'].toString()),
-                  onTap: () {
-                    
-                  },
+                itemBuilder: (context, index) {
+                  return ListTile(
+                    title: Text(data[index]['pk'].toString()),
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => Comment(pk: data[index]['pk'], index: index)),
+                      );
+                    },
                   );
-              },
-              itemCount: data.length,
-              
+                },
+                itemCount: data.length,
               )
             : Center(
                 child: CircularProgressIndicator(
