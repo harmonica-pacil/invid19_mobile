@@ -17,9 +17,10 @@ class _CommentState extends State<Comment> {
   var data_diskusi;
   var diskusi_i;
 
-  var url_comment = "http://127.0.0.1:8000/comment/json/ ";
+  var url_comment = "http://127.0.0.1:8000/comment/json/";
   var data_comment;
   var title;
+  var img_url = "https://res.cloudinary.com/da66vxlpb/image/upload/v1/";
 
   @override
   void initState() {
@@ -33,36 +34,51 @@ class _CommentState extends State<Comment> {
     var res_diskusi = await http.get(Uri.parse(url_diskusi));
     data_diskusi = jsonDecode(res_diskusi.body);
     diskusi_i = data_diskusi[i]['fields'];
-    title =  diskusi_i['title'];
-    
+    title = diskusi_i['title'];
 
     var res_comment = await http.get(Uri.parse(url_comment));
     data_comment = jsonDecode(res_comment.body);
 
+    //removed unrelated comment
+    data_comment
+        .removeWhere((m) => m['fields']['id_forum'] != widget.pk.toString());
 
     setState(() {});
   }
- 
+
   @override
   Widget build(BuildContext context) {
-    var i   = widget.index+1;
+    var i = widget.index + 1;
     return Scaffold(
       appBar: AppBar(
-        title: Text( "Diskusi " +  i.toString()),
+        title: Text("Diskusi " + i.toString()),
       ),
       body: data_comment != null
-        ? ListView.builder(itemCount: data_comment.length , itemBuilder: (context, index) {
-                  return ListTile(
-                    title: Text(data_comment[index]['fields']['message']),
-                    onTap: () {},
-                  );
-                },
+          ? ListView.builder(
+              itemCount: data_comment.length,
+              itemBuilder: (context, index) {
+                return ListTile(
+                  leading: CircleAvatar(
+                      backgroundImage: NetworkImage(img_url +
+                          data_comment[index]['fields']["creator_image"])
+                      // .network(img_url + data_comment[index]['fields']["creator_image"]),
 
-        
-
-      )
-      : Center()
-
+                      ),
+                  title: Text(data_comment[index]['fields']['message']),
+                  subtitle: Text(data_comment[index]['fields']
+                      ['comment_creator_username']),
+                );
+              },
+            )
+          : Center(
+              child: CircularProgressIndicator(
+                color: Colors.white,
+              ),
+            ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {},
+        child: Icon(Icons.send),
+      ),
     );
   }
 }
