@@ -47,7 +47,6 @@ Drawer myDrawer(context) {
         ElevatedButton(
           onPressed: () {
             Provider.of<Auth>(context, listen: false).logout();
-            Navigator.of(context).pushReplacementNamed('/auth');
           },
           child: Text('Logout'),
         )
