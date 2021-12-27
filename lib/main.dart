@@ -30,7 +30,7 @@ class MyApp extends StatelessWidget {
             /* dark theme settings */
           ),
           themeMode: ThemeMode.dark,
-          home: auth.isAuth ? AuthScreen() : Home(title: 'Home'),
+          home: auth.isAuth ? Home(title: 'Home') : AuthScreen(),
           routes: {
             Home.routeName: (ctx) => const Home(
                   title: 'Home',

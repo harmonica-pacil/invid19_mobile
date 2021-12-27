@@ -40,6 +40,7 @@ class _AuthCardState extends State<AuthCard> {
     'firstname': '',
     'lastname': '',
     'username': '',
+    'email': '',
     'password': '',
   };
   var _isLoading = false;
@@ -50,6 +51,24 @@ class _AuthCardState extends State<AuthCard> {
       context: context,
       builder: (ctx) => AlertDialog(
         title: Text('An Error Occurred!'),
+        content: Text(message),
+        actions: <Widget>[
+          TextButton(
+            child: Text('Okay'),
+            onPressed: () {
+              Navigator.of(ctx).pop();
+            },
+          )
+        ],
+      ),
+    );
+  }
+
+  void _showSuccessDialog(String message) {
+    showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: Text('Success!'),
         content: Text(message),
         actions: <Widget>[
           TextButton(
@@ -74,7 +93,6 @@ class _AuthCardState extends State<AuthCard> {
     });
     try {
       if (_authMode == AuthMode.Login) {
-        print('test');
         // Log user in
         await Provider.of<Auth>(context, listen: false).login(
           _authData['username'] ?? '',
@@ -84,10 +102,13 @@ class _AuthCardState extends State<AuthCard> {
         // Sign user up
         await Provider.of<Auth>(context, listen: false).signup(
           _authData['username'] ?? '',
+          _authData['email'] ?? '',
           _authData['firstname'] ?? '',
           _authData['lastname'] ?? '',
           _authData['password'] ?? '',
         );
+
+        _showSuccessDialog('Account created successfully!');
       }
     } on HttpException catch (error) {
       var errorMessage = 'Authentication failed';
@@ -121,6 +142,7 @@ class _AuthCardState extends State<AuthCard> {
   @override
   Widget build(BuildContext context) {
     final deviceSize = MediaQuery.of(context).size;
+
     return Card(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10.0),
@@ -139,7 +161,7 @@ class _AuthCardState extends State<AuthCard> {
               children: <Widget>[
                 TextFormField(
                   decoration: InputDecoration(labelText: 'Username'),
-                  keyboardType: TextInputType.name,
+                  keyboardType: TextInputType.text,
                   validator: (value) {
                     if (value!.isEmpty) {
                       return 'Please enter a username.';
@@ -151,8 +173,21 @@ class _AuthCardState extends State<AuthCard> {
                 ),
                 if (_authMode == AuthMode.Signup)
                   TextFormField(
+                    decoration: InputDecoration(labelText: 'Email'),
+                    keyboardType: TextInputType.text,
+                    validator: (value) {
+                      if (value!.isEmpty || !value.contains('@')) {
+                        return 'Invalid email';
+                      }
+                    },
+                    onSaved: (value) {
+                      _authData['email'] = value ?? '';
+                    },
+                  ),
+                if (_authMode == AuthMode.Signup)
+                  TextFormField(
                     decoration: InputDecoration(labelText: 'Firstname'),
-                    keyboardType: TextInputType.name,
+                    keyboardType: TextInputType.text,
                     validator: (value) {
                       if (value!.isEmpty) {
                         return 'Please enter your first name';
@@ -165,7 +200,7 @@ class _AuthCardState extends State<AuthCard> {
                 if (_authMode == AuthMode.Signup)
                   TextFormField(
                     decoration: InputDecoration(labelText: 'Lastname'),
-                    keyboardType: TextInputType.name,
+                    keyboardType: TextInputType.text,
                     validator: (value) {
                       if (value!.isEmpty) {
                         return 'Please enter your last name';
