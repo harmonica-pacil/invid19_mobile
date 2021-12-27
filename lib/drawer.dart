@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'forum.dart';
+import 'package:provider/provider.dart';
+import '../providers/auth.dart';
 
 Drawer myDrawer(context) {
   return Drawer(
@@ -42,10 +44,13 @@ Drawer myDrawer(context) {
           leading: Icon(Icons.account_circle),
           title: Text('bla bla'),
         ),
-        ListTile(
-          leading: Icon(Icons.account_circle),
-          title: Text('bla bla'),
-        ),
+        ElevatedButton(
+          onPressed: () {
+            Provider.of<Auth>(context, listen: false).logout();
+            Navigator.of(context).pushReplacementNamed('/auth');
+          },
+          child: Text('Logout'),
+        )
       ],
     ),
   );
