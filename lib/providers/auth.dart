@@ -14,18 +14,15 @@ class Auth with ChangeNotifier {
   }
 
   String? get token {
-    if (_token != null) {
-      return _token;
-    }
-    return null;
+    return _token;
   }
 
   String? get userId {
     return _userId;
   }
 
-  Future<void> signup(String username, String firstname, String lastname,
-      String password) async {
+  Future<void> signup(String username, String email, String firstname,
+      String lastname, String password) async {
     final url = Uri.parse('http://10.0.2.2:8000/api/user/create');
     try {
       final response = await http.post(
@@ -39,13 +36,19 @@ class Auth with ChangeNotifier {
             'first_name': firstname,
             'last_name': lastname,
             'password': password,
+            'email': email
           },
         ),
       );
       final responseData = json.decode(response.body);
 
       if (responseData['username'] != null) {
-        throw HttpException(responseData['username'][0]);
+        if (responseData['username'][0] != null)
+          throw HttpException(responseData['username'][0]);
+      }
+      if (responseData['email'] != null) {
+        if (responseData['email'][0] != null)
+          throw HttpException(responseData['email'][0]);
       }
 
       notifyListeners();
