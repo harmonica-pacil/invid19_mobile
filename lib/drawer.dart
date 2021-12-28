@@ -20,7 +20,9 @@ Drawer myDrawer(context) {
         ListTile(
           leading: Icon(Icons.account_circle),
           title: Text('Profile'),
-          onTap: () {},
+          onTap: () {
+            Navigator.of(context).pushNamed('/profile');
+          },
         ),
         ListTile(
           leading: Icon(Icons.forum),
@@ -44,12 +46,16 @@ Drawer myDrawer(context) {
           leading: Icon(Icons.account_circle),
           title: Text('bla bla'),
         ),
-        ElevatedButton(
-          onPressed: () {
+        ListTile(
+          leading: const Icon(Icons.exit_to_app),
+          title: const Text('Logout'),
+          onTap: () {
+            Navigator.of(context).pop();
+            Navigator.of(context).pushReplacementNamed('/');
+
             Provider.of<Auth>(context, listen: false).logout();
           },
-          child: Text('Logout'),
-        )
+        ),
       ],
     ),
   );

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'home.dart';
 import './providers/auth.dart';
 import './screens/auth_screen.dart';
+import './screens/profile_screen.dart';
 import 'package:provider/provider.dart';
 
 void main() {
@@ -36,6 +37,7 @@ class MyApp extends StatelessWidget {
                   title: 'Home',
                 ),
             AuthScreen.routeName: (ctx) => const AuthScreen(),
+            Profile.routeName: (ctx) => const Profile(),
           },
         ),
       ),
