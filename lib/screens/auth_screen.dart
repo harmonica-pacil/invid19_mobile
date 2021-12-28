@@ -37,8 +37,7 @@ class _AuthCardState extends State<AuthCard> {
   final GlobalKey<FormState> _formKey = GlobalKey();
   AuthMode _authMode = AuthMode.Login;
   final Map<String, String> _authData = {
-    'firstname': '',
-    'lastname': '',
+    'name': '',
     'username': '',
     'email': '',
     'password': '',
@@ -103,8 +102,7 @@ class _AuthCardState extends State<AuthCard> {
         await Provider.of<Auth>(context, listen: false).signup(
           _authData['username'] ?? '',
           _authData['email'] ?? '',
-          _authData['firstname'] ?? '',
-          _authData['lastname'] ?? '',
+          _authData['name'] ?? '',
           _authData['password'] ?? '',
         );
 
@@ -186,7 +184,7 @@ class _AuthCardState extends State<AuthCard> {
                   ),
                 if (_authMode == AuthMode.Signup)
                   TextFormField(
-                    decoration: InputDecoration(labelText: 'Firstname'),
+                    decoration: InputDecoration(labelText: 'Fullname'),
                     keyboardType: TextInputType.text,
                     validator: (value) {
                       if (value!.isEmpty) {
@@ -194,20 +192,7 @@ class _AuthCardState extends State<AuthCard> {
                       }
                     },
                     onSaved: (value) {
-                      _authData['firstname'] = value ?? '';
-                    },
-                  ),
-                if (_authMode == AuthMode.Signup)
-                  TextFormField(
-                    decoration: InputDecoration(labelText: 'Lastname'),
-                    keyboardType: TextInputType.text,
-                    validator: (value) {
-                      if (value!.isEmpty) {
-                        return 'Please enter your last name';
-                      }
-                    },
-                    onSaved: (value) {
-                      _authData['lastname'] = value ?? '';
+                      _authData['name'] = value ?? '';
                     },
                   ),
                 TextFormField(
