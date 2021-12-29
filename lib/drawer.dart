@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:invid19/folder-dataCovid/mainDataCovid.dart';
+import 'package:invid19/folder-dataCovid/screens/homeDataCovid.dart';
 import 'forum.dart';
 import 'package:provider/provider.dart';
 import '../providers/auth.dart';
@@ -35,8 +37,14 @@ Drawer myDrawer(context) {
           },
         ),
         ListTile(
-          leading: Icon(Icons.account_circle),
-          title: Text('bla bla'),
+          leading: Icon(Icons.assessment_outlined),
+          title: Text('Data Covid'),
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => MyHomePage()),
+            );
+          },
         ),
         ListTile(
           leading: Icon(Icons.account_circle),
