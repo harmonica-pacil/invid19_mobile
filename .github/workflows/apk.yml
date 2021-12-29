@@ -33,5 +33,5 @@ jobs:
         with:
           flutter-version: '2.x'
       - run: flutter pub get
-      - run: flutter analyze
+      # - run: flutter analyze
       - run: flutter test
