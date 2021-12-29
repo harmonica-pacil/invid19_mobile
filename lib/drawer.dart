@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'forum.dart';
+import 'folderArtikel/home_artikel.dart';
 
 Drawer myDrawer(context) {
   return Drawer(
@@ -31,8 +32,14 @@ Drawer myDrawer(context) {
           },
         ),
         ListTile(
-          leading: Icon(Icons.account_circle),
-          title: Text('bla bla'),
+          leading: Icon(Icons.article_outlined),
+          title: Text('Artikel'),
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => Artikel()),
+            );
+          },
         ),
         ListTile(
           leading: Icon(Icons.account_circle),
