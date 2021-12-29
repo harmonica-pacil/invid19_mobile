@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'drawer.dart';
 
 class Home extends StatefulWidget {
+  static const routeName = '/home';
   final String title;
   // ignore: use_key_in_widget_constructors
   const Home({Key? key, required this.title}) : super(key: key);
