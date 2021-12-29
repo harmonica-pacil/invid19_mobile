@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:invid19/folder-dataCovid/mainDataCovid.dart';
 import 'package:invid19/folder-dataCovid/screens/homeDataCovid.dart';
 import 'forum.dart';
+import 'folderArtikel/home_artikel.dart';
 import 'package:provider/provider.dart';
 import '../providers/auth.dart';
 
@@ -47,8 +48,14 @@ Drawer myDrawer(context) {
           },
         ),
         ListTile(
-          leading: Icon(Icons.account_circle),
-          title: Text('bla bla'),
+          leading: Icon(Icons.article_outlined),
+          title: Text('Artikel'),
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => Artikel()),
+            );
+          },
         ),
         ListTile(
           leading: Icon(Icons.account_circle),
