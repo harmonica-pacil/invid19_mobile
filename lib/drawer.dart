@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:invid19/folder-dataCovid/mainDataCovid.dart';
 import 'package:invid19/folder-dataCovid/screens/homeDataCovid.dart';
+import 'package:invid19/screens/home_vaksinasi.dart';
 import 'forum.dart';
 import 'folderArtikel/home_artikel.dart';
 import 'package:provider/provider.dart';
@@ -58,8 +59,14 @@ Drawer myDrawer(context) {
           },
         ),
         ListTile(
-          leading: Icon(Icons.account_circle),
-          title: Text('bla bla'),
+          leading: Icon(Icons.health_and_safety_outlined ),
+          title: Text('Vaksinasi'),
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => HomeVaksinasi()),
+            );
+          },
         ),
         ListTile(
           leading: const Icon(Icons.exit_to_app),
