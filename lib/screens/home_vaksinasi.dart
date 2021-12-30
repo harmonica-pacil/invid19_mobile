@@ -41,7 +41,16 @@ class _HomeVaksinasi extends State<HomeVaksinasi> {
             "Vaksinasi COVID-19",
             textAlign: TextAlign.center,
             style: TextStyle(
-                fontWeight: FontWeight.w500, fontSize: 32, color: Colors.white),
+                fontWeight: FontWeight.bold, fontSize: 32, color: Colors.white),
+          ),
+        ),
+        Padding(
+          padding: EdgeInsets.all(5.0),
+          child: Text(
+            "Segera daftarkan diri anda untuk menerima vaksinasi demi keselamatan bersama",
+            textAlign: TextAlign.center,
+            style: TextStyle(
+                fontWeight: FontWeight.w500, fontSize: 14, color: Colors.white),
           ),
         ),
         Padding(
@@ -50,7 +59,7 @@ class _HomeVaksinasi extends State<HomeVaksinasi> {
             "Anda dapat mendaftarkan jadwal vaksinasi di sini",
             textAlign: TextAlign.center,
             style: TextStyle(
-                fontWeight: FontWeight.w500, fontSize: 16, color: Colors.white),
+                fontWeight: FontWeight.bold, fontSize: 16, color: Colors.white),
           ),
         ),
         Padding(
@@ -73,14 +82,14 @@ class _HomeVaksinasi extends State<HomeVaksinasi> {
                           },
                         ),
                       ),
-        SizedBox(height: 18),
+        SizedBox(height: 25),
         Padding(
           padding: EdgeInsets.all(16.0),
           child: Text(
             "Lihat daftar vaksinasi COVID-19 terkini",
             textAlign: TextAlign.center,
             style: TextStyle(
-                fontWeight: FontWeight.w500, fontSize: 16, color: Colors.white),
+                fontWeight: FontWeight.bold, fontSize: 16, color: Colors.white),
           ),
         ),
         FutureBuilder<List<Vaksin>>(
