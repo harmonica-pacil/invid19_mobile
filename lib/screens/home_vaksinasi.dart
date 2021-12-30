@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:invid19/screens/add_pendaftar.dart';
 import '../models/vaksin.dart';
 import '../widgets/card_vaksin.dart';
 import '../screens/add_vaksinasi.dart';
@@ -85,7 +84,7 @@ class _HomeVaksinasi extends State<HomeVaksinasi> {
           ),
         ),
         FutureBuilder<List<Vaksin>>(
-          future: getArtikel(),
+          future: getVaksinasi(),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
               final List<Vaksin>? article = snapshot.data;
@@ -96,7 +95,7 @@ class _HomeVaksinasi extends State<HomeVaksinasi> {
                   physics: NeverScrollableScrollPhysics(),
                   itemCount: article?.length,
                   itemBuilder: (context, index) {
-                    return ArtikelCard(
+                    return VaksinasiCard(
                       context,
                       article![index],
                     );
@@ -104,7 +103,7 @@ class _HomeVaksinasi extends State<HomeVaksinasi> {
                 );
               } else {
                 return const Text(
-                  "Tidak ada artikel yang ditampilkan",
+                  "Tidak ada jadwal vaksinasi yang ditampilkan",
                 );
               }
             } else if (snapshot.hasError) {

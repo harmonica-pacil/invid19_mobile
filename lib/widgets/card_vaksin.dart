@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 import '../screens/add_pendaftar.dart';
 import '../models/vaksin.dart';
 
-Widget ArtikelCard(BuildContext context, Vaksin vaksin) {
+Widget VaksinasiCard(BuildContext context, Vaksin vaksin) {
   return Center(
     child: Card(
       child: InkWell(
