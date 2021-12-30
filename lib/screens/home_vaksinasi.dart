@@ -47,7 +47,7 @@ class _HomeVaksinasi extends State<HomeVaksinasi> {
         Padding(
           padding: EdgeInsets.all(16.0),
           child: Text(
-            "Daftarkan Lokasi Vaksinasi Anda!",
+            "Anda dapat mendaftarkan jadwal vaksinasi di sini",
             textAlign: TextAlign.center,
             style: TextStyle(
                 fontWeight: FontWeight.w500, fontSize: 16, color: Colors.white),
