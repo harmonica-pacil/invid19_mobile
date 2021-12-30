@@ -27,7 +27,7 @@ Future<dynamic> addPendaftar(Pendaftar pendaftar) async {
   return jsonDecode(response.body)["success"];
 }
 
-Future<List<Vaksin>> getArtikel() async {
+Future<List<Vaksin>> getVaksinasi() async {
   var url =
       Uri.parse('https://invid19.herokuapp.com/vaksinasi/json');
   var response = await http.get(
