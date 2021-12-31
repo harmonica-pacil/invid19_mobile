@@ -3,6 +3,7 @@ import 'package:invid19/folder-dataCovid/mainDataCovid.dart';
 import 'package:invid19/folder-dataCovid/screens/homeDataCovid.dart';
 import 'package:invid19/screens/home_vaksinasi.dart';
 import 'forum.dart';
+import 'package:invid19/folderBerita/home_berita.dart';
 import 'folderArtikel/home_artikel.dart';
 import 'package:provider/provider.dart';
 import '../providers/auth.dart';
@@ -55,6 +56,16 @@ Drawer myDrawer(context) {
             Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => Artikel()),
+            );
+          },
+        ),
+        ListTile(
+          leading: Icon(Icons.my_library_books_outlined),
+          title: Text('Berita'),
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => homeBerita()),
             );
           },
         ),
