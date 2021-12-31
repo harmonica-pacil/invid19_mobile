@@ -11,7 +11,7 @@ class Forum extends StatefulWidget {
 }
 
 class _ForumState extends State<Forum> {
-  var url = "http://127.0.0.1:8000/diskusi/json/";
+  var url = "http://invid19.herokuapp.com/diskusi/json/";
   var data;
 
   @override

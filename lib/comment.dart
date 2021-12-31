@@ -13,11 +13,11 @@ class Comment extends StatefulWidget {
 }
 
 class _CommentState extends State<Comment> {
-  var url_diskusi = "http://127.0.0.1:8000/diskusi/json/";
+  var url_diskusi = "http://invid19.herokuapp.com/diskusi/json/";
   var data_diskusi;
   var diskusi_i;
 
-  var url_comment = "http://127.0.0.1:8000/comment/json/";
+  var url_comment = "http://invid19.herokuapp.com/comment/json/";
   var data_comment;
   var title;
   var img_url = "https://res.cloudinary.com/da66vxlpb/image/upload/v1/";
