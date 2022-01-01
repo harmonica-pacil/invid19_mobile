@@ -29,6 +29,8 @@ class _CommentState extends State<Comment> {
   var img_url2 =
       "https://res.cloudinary.com/da66vxlpb/image/upload/v1/images/media/";
 
+  get pk => widget.pk;
+
   @override
   void initState() {
     // TODO: implement initState
@@ -40,8 +42,13 @@ class _CommentState extends State<Comment> {
     int i = widget.pk;
     var res_diskusi = await http.get(Uri.parse(url_diskusi));
     data_diskusi = jsonDecode(res_diskusi.body);
-    diskusi_i = data_diskusi[i]['fields'];
-    title = diskusi_i['title'];
+    for (var j = 0; j < data_diskusi.length; j++) {
+      if (data_diskusi[j]['pk'] == i) {
+        diskusi_i = data_diskusi[j]['fields'];
+        break;
+      }
+    }
+    title = diskusi_i != null ? diskusi_i['title'] : " ";
 
     var res_comment = await http.get(Uri.parse(url_comment));
     data_comment = jsonDecode(res_comment.body);
@@ -51,6 +58,7 @@ class _CommentState extends State<Comment> {
         .removeWhere((m) => m['fields']['id_forum'] != widget.pk.toString());
 
     setState(() {});
+    print(data_diskusi);
     print(i.toString());
     print(title);
     print(data_comment);
@@ -95,7 +103,7 @@ class _CommentState extends State<Comment> {
         onPressed: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => formComment()),
+            MaterialPageRoute(builder: (context) => formComment(pk:pk)),
           );
         },
         child: Icon(Icons.add_comment_rounded),
@@ -104,10 +112,24 @@ class _CommentState extends State<Comment> {
   }
 }
 
-class formComment extends StatelessWidget {
-  formComment({Key? key}) : super(key: key);
-  TextEditingController titleController = TextEditingController();
+class formComment extends StatefulWidget {
+  int pk;
+
+  formComment({Key? key, required this.pk}) : super(key: key);
+
+
+  @override
+  State<formComment> createState() => _formCommentState();
+}
+
+class _formCommentState extends State<formComment> {
+
+
   TextEditingController messageController = TextEditingController();
+
+  get pk => widget.pk;
+
+
 
   void _showErrorDialog(context, String message) {
     showDialog(
@@ -128,14 +150,14 @@ class formComment extends StatelessWidget {
   }
 
   postData(context, message) {
-    // const url = 'http://10.0.2.2:8000/diskusi/add-api/';
-    const url = 'https://invid19.herokuapp.com/comment/flutter';
+    // const url = 'http://127.0.0.1:8000/comment/flutter/';
+    const url = 'https://invid19.herokuapp.com/comment/flutter/';
     try {
       var auth = Provider.of<Auth>(context, listen: false);
       if (!auth.isAuth) {
         throw const HttpException('Permission Denied');
       }
-
+      print(!auth.isAuth);
       var token = auth.token;
       var userId = auth.userId;
 
@@ -144,6 +166,7 @@ class formComment extends StatelessWidget {
       }, body: {
         'message': message,
         'user': '$userId',
+        'id': pk.toString(),
       });
     } catch (error) {
       _showErrorDialog(context, error.toString());

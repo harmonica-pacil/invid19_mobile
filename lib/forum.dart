@@ -211,7 +211,7 @@ class ForumForm extends StatelessWidget {
       if (!auth.isAuth) {
         throw const HttpException('Not have permission');
       }
-
+      print(!auth.isAuth);
       var token = auth.token;
       var userId = auth.userId;
       // print(userId);
