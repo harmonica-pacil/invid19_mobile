@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
       ],
       child: Consumer<Auth>(
         builder: (ctx, auth, _) => MaterialApp(
-          title: 'MyShop',
+          title: 'Invid 19',
           theme: ThemeData(
             brightness: Brightness.light,
             /* light theme settings */

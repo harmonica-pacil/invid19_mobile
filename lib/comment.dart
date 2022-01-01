@@ -1,6 +1,11 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+
+import 'package:invid19/providers/auth.dart';
+import 'package:provider/provider.dart';
 
 class Comment extends StatefulWidget {
   final int pk;
@@ -21,6 +26,8 @@ class _CommentState extends State<Comment> {
   var data_comment;
   var title;
   var img_url = "https://res.cloudinary.com/da66vxlpb/image/upload/v1/";
+  var img_url2 =
+      "https://res.cloudinary.com/da66vxlpb/image/upload/v1/images/media/";
 
   @override
   void initState() {
@@ -30,7 +37,7 @@ class _CommentState extends State<Comment> {
   }
 
   fetchData() async {
-    int i = widget.index;
+    int i = widget.pk;
     var res_diskusi = await http.get(Uri.parse(url_diskusi));
     data_diskusi = jsonDecode(res_diskusi.body);
     diskusi_i = data_diskusi[i]['fields'];
@@ -44,14 +51,16 @@ class _CommentState extends State<Comment> {
         .removeWhere((m) => m['fields']['id_forum'] != widget.pk.toString());
 
     setState(() {});
+    print(i.toString());
+    print(title);
+    print(data_comment);
   }
 
   @override
   Widget build(BuildContext context) {
-    var i = widget.index + 1;
     return Scaffold(
       appBar: AppBar(
-        title: Text("Diskusi " + i.toString()),
+        title: title != null ? Text("Diskusi " + "'" + title + "'") : Text(" "),
       ),
       body: data_comment != null
           ? ListView.builder(
@@ -59,14 +68,21 @@ class _CommentState extends State<Comment> {
               itemBuilder: (context, index) {
                 return ListTile(
                   leading: CircleAvatar(
-                      backgroundImage: NetworkImage(img_url +
-                          data_comment[index]['fields']["creator_image"])
+                      backgroundImage: data_comment[index]['fields']
+                                  ["creator_image"] ==
+                              "profiles/default-user_pfzkxt"
+                          ? NetworkImage(img_url2 +
+                              data_comment[index]['fields']["creator_image"])
+                          : NetworkImage(img_url +
+                              data_comment[index]['fields']["creator_image"])
                       // .network(img_url + data_comment[index]['fields']["creator_image"]),
 
                       ),
                   title: Text(data_comment[index]['fields']['message']),
                   subtitle: Text(data_comment[index]['fields']
-                      ['comment_creator_username']),
+                          ['comment_creator_username'] +
+                      " - " +
+                      data_comment[index]['fields']['created_at']),
                 );
               },
             )
@@ -76,8 +92,135 @@ class _CommentState extends State<Comment> {
               ),
             ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
-        child: Icon(Icons.send),
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => formComment()),
+          );
+        },
+        child: Icon(Icons.add_comment_rounded),
+      ),
+    );
+  }
+}
+
+class formComment extends StatelessWidget {
+  formComment({Key? key}) : super(key: key);
+  TextEditingController titleController = TextEditingController();
+  TextEditingController messageController = TextEditingController();
+
+  void _showErrorDialog(context, String message) {
+    showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: const Text('An Error Occurred!'),
+        content: Text(message),
+        actions: <Widget>[
+          TextButton(
+            child: const Text('Okay'),
+            onPressed: () {
+              Navigator.of(ctx).pop();
+            },
+          )
+        ],
+      ),
+    );
+  }
+
+  postData(context, message) {
+    // const url = 'http://10.0.2.2:8000/diskusi/add-api/';
+    const url = 'https://invid19.herokuapp.com/comment/flutter';
+    try {
+      var auth = Provider.of<Auth>(context, listen: false);
+      if (!auth.isAuth) {
+        throw const HttpException('Permission Denied');
+      }
+
+      var token = auth.token;
+      var userId = auth.userId;
+
+      http.post(Uri.parse(url), headers: {
+        'Authorization': 'Token $token',
+      }, body: {
+        'message': message,
+        'user': '$userId',
+      });
+    } catch (error) {
+      _showErrorDialog(context, error.toString());
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text("Post a comment")),
+      body: Form(
+        child: SingleChildScrollView(
+          child: Container(
+            padding: const EdgeInsets.all(20.0),
+            child: Column(
+              children: [
+                const Padding(
+                  padding: EdgeInsets.fromLTRB(20.0, 25.0, 20.0, 10.0),
+                  child: Text('Create Comment',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 35.0,
+                        color: Colors.white,
+                      )),
+                ),
+                const Padding(
+                  padding: EdgeInsets.all(8.0),
+                  child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text('Message',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20.0,
+                          color: Colors.white,
+                        )),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: TextFormField(
+                    controller: messageController,
+                    maxLines: 10,
+                    obscureText: false,
+                    decoration: InputDecoration(
+                      hintText: "Input your comment here...",
+                      filled: true,
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(5.0)),
+                    ),
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return 'Message empty';
+                      }
+                      return null;
+                    },
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: ElevatedButton(
+                      child: const Text(
+                        "Add",
+                        style: TextStyle(color: Colors.white),
+                      ),
+                      onPressed: () {
+                        postData(context, messageController.text);
+                        Navigator.pop(context);
+                      },
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
       ),
     );
   }
